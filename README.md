@@ -55,7 +55,7 @@ Follow these steps to run the project locally on your system.
 
 ### 1️ Clone the repository
 
-git clone https://github.com/<your-username>/billing_project.git
+git clone "https://github.com/Jayanthebr/billing_project.git"
 
 cd billing_project
 
