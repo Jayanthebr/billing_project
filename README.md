@@ -23,7 +23,7 @@ When a customer purchases items:
 
 ---
 
-## ⚙️ Features
+## Features
 
 -  **Bill Generation** — Create bills dynamically with product details, quantity, and prices.
 -  **Change Calculation** — Automatically computes change to be returned in available denominations.
@@ -34,6 +34,44 @@ When a customer purchases items:
 -  **FastAPI + SQLite** — Lightweight backend with fast response times.
 
 ---
+
+---
+
+## Technologies Used
+
+ Component        | Technology Used 
+-----------------------------------
+ **Backend**      | FastAPI (Python 3.8+) 
+ **Database**     | SQLite (via SQLAlchemy ORM) 
+ **Frontend**     | HTML5, JavaScript 
+ **Server**       | Uvicorn 
+ **Dependencies** | Pydantic, SQLAlchemy, Jinja2, python-multipart 
+
+---
+
+##  Setup Instructions
+
+Follow these steps to run the project locally on your system.
+
+### 1️ Clone the repository
+
+git clone https://github.com/<your-username>/billing_project.git
+
+cd billing_project
+
+python -m venv venv
+
+venv\Scripts\activate("windows")
+
+source venv/bin/activate("macOS/Linux")
+
+pip install -r requirements.txt
+
+python -m app.seed_data
+
+uvicorn app.main:app --reload
+
+then visit "http://127.0.0.1:8000/billing"
 
 
 

@@ -1,0 +1,45 @@
+<!-- app/templates/billing.html -->
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Billing</title>
+  <script>
+    let lineIndex = 0;
+    function addLine(sku='', qty=1){
+      const container = document.getElementById('lines');
+      const div = document.createElement('div');
+      div.innerHTML = `
+        <select name="product_id_${lineIndex}" required>
+          {% for p in products %}
+            <option value="{{p.product_id}}">{{p.product_id}} — {{p.name}} ({{p.available_stocks}})</option>
+          {% endfor %}
+        </select>
+        <input type="number" name="quantity_${lineIndex}" min="1" value="${qty}" required />
+      `;
+      container.appendChild(div);
+      lineIndex++;
+    }
+
+    function addDefaultLine(){ addLine(); }
+
+    window.onload = function(){ addLine(); } // one line by default
+  </script>
+</head>
+<body>
+  <h1>Billing Page</h1>
+  <form method="post" action="/generate-bill">
+    <label>Customer Email: <input name="customer_email" type="email" required /></label><br/>
+    <div id="lines"></div>
+    <button type="button" onclick="addDefaultLine()">Add New</button>
+
+    <h3>Denominations (counts you have)</h3>
+    {% for d in denoms %}
+      <label>{{d.value}} : <input type="number" name="denom_{{d.value}}" min="0" value="{{d.count}}" /></label><br/>
+    {% endfor %}
+
+    <label>Paid Amount: <input name="paid_amount" type="number" step="0.01" required /></label><br/>
+    <button type="submit">Generate Bill</button>
+  </form>
+</body>
+</html>

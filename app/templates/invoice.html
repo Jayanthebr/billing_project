@@ -1,0 +1,53 @@
+<!-- app/templates/invoice.html -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"/></head>
+<body>
+  <h1>Invoice: {{ purchase.invoice_no }}</h1>
+  <p>Customer: {{ purchase.customer.email if purchase.customer else 'Unknown' }}</p>
+  
+  <table border="1">
+    <thead>
+      <tr>
+        <th>SKU</th>
+        <th>Name</th>
+        <th>Unit</th>
+        <th>Qty</th>
+        <th>Subtotal</th>
+        <th>Tax</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for it in items %}
+      <tr>
+        <td>{{ it.product_sku }}</td>
+        <td>{{ it.product_name }}</td>
+        <td>{{ it.unit_price }}</td>
+        <td>{{ it.quantity }}</td>
+        <td>{{ it.item_subtotal }}</td>
+        <td>{{ it.item_tax }}</td>
+        <td>{{ it.item_total }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <p>Subtotal: {{ purchase.total_subtotal }}</p>
+  <p>Tax: {{ purchase.total_tax }}</p>
+  <p>Total: {{ purchase.total_amount }}</p>
+  <p>Paid: {{ purchase.paid_amount }}</p>
+  <p>Change: {{ purchase.change_amount }}</p>
+
+  {% if insufficient_denominations %}
+    <p style="color:red;">Cannot provide exact change with current denominations.</p>
+  {% else %}
+    <h3>Denominations to return</h3>
+    <ul>
+      {% for entry in denom_used %}
+        <li>{{ entry.value }} × {{ entry.count }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</body>
+</html>
